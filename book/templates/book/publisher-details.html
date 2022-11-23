@@ -5,12 +5,12 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Book Store</title>
+    <title>Document</title>
 </head>
 <body>
-    <h1>Hello world!</h1>
-    {% for publisher in publishers %}
-        <li><a href="{{ publisher.get_absolute_url }}">{{ publisher.name }} - {{ publisher.email }}</a></li>
-    {% endfor %}
+    <h1>Publisher Detail Page</h1>
+    <h2>{{ publisher.name }}</h2>
+    <p>{{ publisher.email }}</p>
+    <p>{{ publisher.website }}</p>
 </body>
 </html>
