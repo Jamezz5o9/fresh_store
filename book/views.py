@@ -1,5 +1,7 @@
+from django.db.models import Count, Avg, Q, F, ExpressionWrapper, DecimalField
 from django.shortcuts import render, get_object_or_404
-from .models import Publisher, Author
+from .models import Publisher, Author, Book
+from .forms import BookForm
 
 
 # Create your views here.git
@@ -29,5 +31,27 @@ def author(request):
 
 
 def author_details(request, uk):
-    author = get_object_or_404(Author, uk=uk)
-    return render(request, "book/author_details.html", context={"author": author})
+    authors = get_object_or_404(Author, uk=uk)
+    return render(request, "book/author_details.html", context={"author": authors})
+
+
+def book_list(request):
+    # queryset = Book.objects.all()
+    # queryset = Book.objects.select_related('publisher').all()
+    # queryset = Book.objects.select_related('publisher').filter(title__icontains='the').filter(price__gt=100)
+    # queryset = Book.objects.select_related('publisher').filter(Q(title__icontains='the') | Q(price__isnull=True))
+    # queryset = Book.objects.select_related('publisher').filter(title=F('slug'))
+    queryset = Book.objects.select_related('publisher').filter(title=F('slug')).annotate(
+        discounted_price=ExpressionWrapper(F('price') * 0.8, output_field=DecimalField()))
+    result = queryset.aggregate(count=Count('id'), average=Avg('price'))
+    return render(request, "book/book-list.html", context={"books": list(queryset), "result": result})
+
+
+def book_create(request):
+    if request.mehtod == "GET":
+        pass
+    elif request.method == "POST":
+        pass
+    form = BookForm()
+    return render(request, "book/book-create.html", context={"form": form})
+

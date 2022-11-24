@@ -5,12 +5,13 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Author index page</title>
+    <title>Document</title>
 </head>
 <body>
-        <h1>Author's remark</h1>
-        {% for auth in author %}
-            <li><a href="{% url "author_details" auth.id %}">{{ auth.first_name }} - {{ auth.last_name }}</a></li>
-        {% endfor %}
+ <h1>Book List Page</h1>
+ {{ result }}
+{% for book in books %}
+    <li><a>{{ book.title }}</a></li>
+{% endfor %}
 </body>
 </html>

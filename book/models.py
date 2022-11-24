@@ -33,22 +33,33 @@ class Book(models.Model):
     date_published = models.DateField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     date_added = models.DateField(auto_now_add=True)
-    edition = models.PositiveSmallIntegerField()
+    edition = models.PositiveSmallIntegerField(editable=False)
     genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default="R")
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, related_name="books")
 
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.price})"
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['title']
+        db_table = ""
 
 
 class Author(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.first_name)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("author_details", kwargs={"slug": self.slug})
 
 
 class Address(models.Model):
