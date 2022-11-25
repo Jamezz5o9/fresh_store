@@ -143,3 +143,7 @@ INTERNAL_IPS = [
 ]
 
 ADMIN_URL = 'admin/'
+
+REST_FRAMEWORK = {
+    "COERCE_DECIMAL_TO_STRING": False
+}

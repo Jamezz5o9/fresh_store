@@ -14,6 +14,9 @@ from . import old_views
 
 
 urlpatterns = [
-    path("books/", views.book_list, name="book-list")
+    path("books/", views.book_list, name="book-list"),
+    path("books/<int:pk>", views.book_detail, name="book-detail"),
+    path("publisher", views.publisher_list, name="publisher-list"),
+    path("publisher/<int:pk>", views.publisher_details, name="publisher-details")
 ]
 
