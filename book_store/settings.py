@@ -43,6 +43,7 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "django_filters",
     "debug_toolbar",
 ]
 
@@ -145,5 +146,9 @@ INTERNAL_IPS = [
 ADMIN_URL = 'admin/'
 
 REST_FRAMEWORK = {
-    "COERCE_DECIMAL_TO_STRING": False
+    "COERCE_DECIMAL_TO_STRING": False,
+    "SEARCH_PARAM": "search_by",
+    "ORDERING_PARAM": "order_by",
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
